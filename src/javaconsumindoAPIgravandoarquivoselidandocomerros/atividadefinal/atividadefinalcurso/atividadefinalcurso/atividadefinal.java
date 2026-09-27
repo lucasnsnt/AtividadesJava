@@ -15,40 +15,50 @@ import static java.net.http.HttpClient.newHttpClient;
 
 public class atividadefinal {
 
-    static void main() {
+    static void main() throws IOException {
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Scanner sc = new Scanner(System.in);
+        GeradorDeArquivo geradorDeArquivo = new GeradorDeArquivo();
+        ConsultaCEP consultaCEP = new ConsultaCEP();
+        System.out.println(consultaCEP.retornaCEP("49142232"));
+        geradorDeArquivo.geraArquivo(consultaCEP.retornaCEP("49142232"));
 
-        String cep = "";
-
-        System.out.println("Qual cep consultar? ");
-        cep = sc.nextLine().replace(" ", "") ;
-
-        String url = "https://viacep.com.br/ws/" + cep + "/json/";
-
-        sc.close();
-
-        try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .GET()
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-
-            JsonObject jsonObject = gson.fromJson(response.body(), JsonObject.class);
-
-
-
-            System.out.println(gson.toJson(jsonObject));
-
-            System.out.println();
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
+//
+//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//        Scanner sc = new Scanner(System.in);
+//
+//        String cep = "";
+//
+//        while (true) {
+//            System.out.println("Qual cep consultar? ");
+//            cep = sc.nextLine().replace(" ", "") ;
+//
+//            if (cep.equalsIgnoreCase("sair")) break;
+//
+//            String url = "https://viacep.com.br/ws/" + cep + "/json/";
+//
+//            try {
+//                HttpClient client = HttpClient.newHttpClient();
+//                HttpRequest request = HttpRequest.newBuilder()
+//                        .uri(URI.create(url))
+//                        .GET()
+//                        .build();
+//
+//                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//
+//                Endereco endereco = gson.fromJson(response.body(), Endereco.class);
+//
+//                System.out.println(gson.toJson(endereco));
+//
+//                System.out.println();
+//            } catch (IOException | InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//        }
+//
+//        sc.close();
+//    }
 
 }
